@@ -106,10 +106,14 @@ public class MainActivity3 extends AppCompatActivity implements View.OnClickList
                     Node firstChild = pubDate.getFirstChild();
                     if(firstChild != null) pubDateValue = firstChild.getNodeValue();
                 }
-                SimpleDateFormat simpleDateFormat= new SimpleDateFormat("YYYY-MM-dd");
-                Date date = new Date();
-                Log.v("T", "data:" + pubDateValue);
-                newsItem = titleValue + "-" + simpleDateFormat.format(date.parse(pubDateValue));
+                try {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+                    Date date = new Date();
+                    newsItem = titleValue + "-" + simpleDateFormat.format(date.parse(pubDateValue));
+                }catch(IllegalArgumentException e){
+                    newsItem = titleValue + "-" + pubDateValue.toString();
+                }
+
             } catch (DOMException e) {
                 e.printStackTrace();
             }
@@ -118,7 +122,7 @@ public class MainActivity3 extends AppCompatActivity implements View.OnClickList
     };
 
 
-                    @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
